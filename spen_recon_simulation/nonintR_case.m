@@ -16,12 +16,11 @@ sampling_pattern = 1:Numerator:res_full*Denumerator;
 %% generate data
 % Phantom = phantom('Modified Shepp-Logan',RES);
 % Phantom_noised = imnoise(Phantom,'gaussian'); xy = 1;
-load('phantom_brain_256x320x320.mat'); xy=1.25;
-im0 = rot90(phantom_brain_256x320x320(:,:,180));
+load('phantom_brain_320x256.mat'); xy=1.25;
 figure(99);imshowMRI(im0,[]);
+Phantom_noised = imresize(im0,[RES*xy,RES]);
 
 % EPI
-Phantom_noised = imresize(im0,[RES*xy,RES]);
 ksp_EPI_full = cfftn(Phantom_noised, [1,2]);
 ksp_EPI = crop(ksp_EPI_full,[res_full*xy/R, res_full]);
 % SPEN R
